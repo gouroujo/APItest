@@ -1,0 +1,105 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Running Heroes Ex App
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths
+basePath: /
+#
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /user:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: user
+    get:
+      description: Returns the user in a given radius from a point
+      # used as the method name of the controller
+      operationId: get
+      parameters:
+        - name: radius
+          in: query
+          description: The maximum radius in meter in wich we get all the users
+          required: false
+          type: integer
+        - name: lat
+          in: query
+          description: The latitude of the starting point
+          required: false
+          type: number
+        - name: lng
+          in: query
+          description: The longitude of the starting point
+          required: false
+          type: number
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              # a pointer to a definition
+              $ref: "#/definitions/UserSchema"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Create a new user
+      # used as the method name of the controller
+      operationId: create
+      parameters:
+        - name: user
+          in: body
+          description: the user to create
+          required: true
+          schema:
+            $ref: '#/definitions/UserSchema'
+      responses:
+        "201":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/UserSchema"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  UserSchema:
+    required:
+      - name
+      - email
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      position:
+        description: the last user's position
+        type: array
+        items:
+          type: number
+          maxLength: 2
+          minLength: 2
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+        
