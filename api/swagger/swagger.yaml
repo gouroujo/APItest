@@ -5,7 +5,7 @@ info:
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths
-basePath: /
+basePath: /api
 #
 schemes:
   # tip: remove http to make production-grade
@@ -29,18 +29,18 @@ paths:
         - name: radius
           in: query
           description: The maximum radius in meter in wich we get all the users
+          type: number
           required: false
-          type: integer
         - name: lat
           in: query
           description: The latitude of the starting point
-          required: false
           type: number
+          required: false
         - name: lng
           in: query
           description: The longitude of the starting point
-          required: false
           type: number
+          required: false
       responses:
         "200":
           description: Success

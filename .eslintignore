@@ -1,0 +1,9 @@
+# node_modules ignored by default
+
+# Ignore files compiled from TypeScript and CoffeeScript
+src/facebookConnectPlugin.js
+index.js
+api
+config
+gulp
+test

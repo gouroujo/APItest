@@ -1,0 +1,32 @@
+@import "../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+html {
+  height: 100%;
+}
+body {
+  position:absolute;
+  top: 0;
+  bottom:0;
+  right:0;
+  left:0;
+}
+.angular-google-map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+.search-box {
+  z-index: 99;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 5px;
+}

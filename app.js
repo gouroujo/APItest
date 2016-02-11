@@ -3,8 +3,11 @@
 var mongoose = require('mongoose');
 var morgan = require('morgan');
 var SwaggerExpress = require('swagger-express-mw');
-var app = require('express')();
-module.exports = app; // for testing
+var express = require('express');
+var fs = require('fs');
+var compress = require('compression');
+
+var app = module.exports.app = exports.app = express();
 
 var config = {
   appRoot: __dirname // required config
@@ -23,6 +26,7 @@ if (app.get('env') == 'production') {
   app.use(morgan('common', { skip: function(req, res) { return res.statusCode < 400 }, stream: accessLogStream }));
 } else {
   app.use(morgan('dev'));
+  // app.use(require('connect-livereload')());
 }
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
@@ -30,8 +34,15 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   // install middleware
   swaggerExpress.register(app);
+  app.use(compress());
+  app.use(express.static(__dirname + "/dist"));
+  app.all('\//^(?!api).*/', function(req, res, next) {
+      // Just send the index.html for other files than API to support HTML5Mode in Angular
+      res.sendFile('/dist/index.html', { root: __dirname });
+  });
 
-  var port = process.env.PORT || 10010;
+
+  var port = process.env.PORT || 3000;
   app.listen(port);
 
   if (swaggerExpress.runner.swagger.paths['/hello']) {

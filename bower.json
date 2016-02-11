@@ -1,0 +1,43 @@
+{
+  "name": "running-ex",
+  "description": "Angular interface",
+  "main": "app.js",
+  "authors": [
+    "Jonathan Pollak"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.9",
+    "lodash": "~4.0.0",
+    "angular-moment": "~0.10.3",
+    "angular-resource": "~1.4.9",
+    "angular-ui-router": "~0.2.16",
+    "angular-bootstrap": "^1.1.2",
+    "bootstrap-sass": "~3.3.6",
+    "angular-google-maps": "^2.3.2",
+    "angular-bootstrap-slider": "^0.1.26"
+  },
+  "overrides": {
+    "bootstrap-sass": {
+      "main": [
+        "assets/stylesheets/_bootstrap.scss",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.eot",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.svg",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.ttf",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.woff",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.woff2"
+      ]
+    }
+  }
+}

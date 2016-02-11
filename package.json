@@ -4,21 +4,50 @@
   "private": true,
   "description": "New Swagger API Project",
   "keywords": [],
-  "author": "",
-  "license": "",
+  "author": "Jonathan Pollak",
+  "license": "MIT",
   "main": "app.js",
   "dependencies": {
+    "bower": "^1.7.7",
+    "compression": "^1.6.1",
     "express": "^4.12.3",
+    "gulp": "^3.9.1",
     "mongoose": "^4.4.3",
     "morgan": "^1.6.1",
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
     "should": "^7.1.0",
-    "supertest": "^1.0.0"
+    "supertest": "^1.0.0",
+    "del": "^2.0.2",
+    "eslint-plugin-angular": "^0.15.0",
+    "gulp": "^3.9.0",
+    "gulp-angular-htmlify": "^2.3.0",
+    "gulp-angular-templatecache": "^1.7.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-changed": "^1.3.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-eslint": "^1.1.0",
+    "gulp-filter": "^3.0.1",
+    "gulp-htmlhint": "^0.3.0",
+    "gulp-live-server": "0.0.29",
+    "gulp-ng-annotate": "^1.0.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-sass": "^2.0.4",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-using": "^0.1.0",
+    "gulp-util": "^3.0.6",
+    "htmlhint-stylish": "^1.0.3",
+    "main-bower-files": "^2.9.0",
+    "node-sass": "^3.4.2",
+    "replace": "^0.3.0",
+    "require-dir": "^0.3.0"
   },
   "scripts": {
     "start": "node app.js",
-    "test": "swagger project test"
+    "test": "swagger project test",
+    "postinstall": "bower install && gulp build",
+    "build": "gulp build"
   }
 }

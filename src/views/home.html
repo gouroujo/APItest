@@ -1,0 +1,73 @@
+<script type="text/ng-template" id="searchbox.tpl.html">
+  <input type="text" placeholder="Adresse" class="form-control">
+</script>
+<script type="text/ng-template" id="modal.tpl.html">
+  <form ng-submit="vm.save()">
+    <div class="modal-header">
+      <h3 class="modal-title">Sauvegarder la position</h3>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>
+          Votre nom:
+        </label>
+        <input ng-model="vm.user.name" type="text" placeholder="Nom" class="form-control" required="true">
+      </div>
+      <div class="form-group">
+        <label>
+          Votre email:
+        </label>
+        <input ng-model="vm.user.email" type="email" placeholder="Email" class="form-control" required="true">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="submit">Sauvegarder</button>
+    </div>
+  </form>
+</script>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-8 search-box">
+      <div class="form-group">
+        <label>
+          Où veux tu courir?
+        </label>
+        <div class="input-group">
+          <div id="adressDiv"></div>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="vm.openModal()">Sauvegarder</button>
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>
+          Trouver un partenaire autour de moi
+        </label>
+        <slider ng-model="vm.searchConfig.radius" min="20" step="10" max="2000" ng-change="vm.update()"></slider>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ui-gmap-google-map data-center='vm.map.center' data-zoom='vm.map.zoom'>
+    <ui-gmap-search-box template="vm.searchbox.template"
+                        events="vm.searchbox.events"
+                        options="vm.searchbox.options"
+                        parentdiv="vm.searchbox.parentdiv">
+                      </ui-gmap-search-box>
+    <ui-gmap-marker coords="vm.marker.coords"
+                    options="vm.marker.options"
+                    events="vm.marker.events"
+                    idkey="1">
+    </ui-gmap-marker>
+
+    <ui-gmap-markers
+            models='vm.users'
+            idKey="'_id'"
+
+            coords="'position'"
+            >
+    </ui-gmap-markers>
+
+</ui-gmap-google-map>
