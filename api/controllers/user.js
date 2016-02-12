@@ -40,9 +40,13 @@ module.exports = {
 
 function getUser(req, res) {
   if (req.swagger.params.lng.value && req.swagger.params.lat.value && req.swagger.params.radius.value) {
-    User.find().near('position', {
-          center: [ req.swagger.params.lng.value, req.swagger.params.lat.value ],
-          maxDistance: req.swagger.params.radius.value
+    User.where('position').near({
+      center: {
+        type: 'Point',
+        coordinates: [ req.swagger.params.lng.value, req.swagger.params.lat.value ]
+      },
+      maxDistance: req.swagger.params.radius.value,
+      spherical: true
     }).limit(100).exec(function (error, result) {
       if (! error) {
         res.status(200).json(result);

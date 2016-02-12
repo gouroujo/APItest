@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 'use strict';
 
 var mongoose = require('mongoose');
@@ -26,6 +28,7 @@ if (app.get('env') == 'production') {
   app.use(morgan('common', { skip: function(req, res) { return res.statusCode < 400 }, stream: accessLogStream }));
 } else {
   app.use(morgan('dev'));
+  mongoose.set('debug', true)
   // app.use(require('connect-livereload')());
 }
 
@@ -44,8 +47,5 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   var port = process.env.PORT || 3000;
   app.listen(port);
-
-  if (swaggerExpress.runner.swagger.paths['/hello']) {
-    console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
-  }
+  console.log("server started on port "+port);
 });

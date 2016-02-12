@@ -9,6 +9,7 @@
   function HomeController($scope, User, $uibModal) {
     /* jshint validthis: true */
     var vm = this;
+
     vm.users = [];
     vm.user = {};
     vm.update = update;
@@ -17,49 +18,15 @@
       lat: 0,
       lng: 0
     };
-    vm.searchbox = {};
     vm.map = { center: { latitude: 48.864, longitude: 2.36 }, zoom: 12 };
     vm.openModal = openModal;
     vm.save = save;
-
-    var events = {
-      place_changed:function (searchBox) {
-          var place = searchBox.getPlace();
-          if (!place || angular.isUndefined(place)) {
-              return;
-          }
-          //set the center point
-          vm.searchConfig.lat = place.geometry.location.lat();
-          vm.searchConfig.lng = place.geometry.location.lng();
-          // refresh the map
-          vm.map = {
-              center:{
-                  latitude:  vm.searchConfig.lat,
-                  longitude: vm.searchConfig.lng
-              },
-              zoom: 13
-          };
-          // refresh the marker
-          vm.marker = {
-              id: 1,
-              options:{
-                draggable:false,
-                streetViewControl: false,
-                zoomControl: false
-              },
-              coords:{
-                latitude:  vm.searchConfig.lat,
-                longitude: vm.searchConfig.lng
-              }
-          };
-          update();
-      }
-    };
-
     vm.searchbox = {
         template:'searchbox.tpl.html',
         parentdiv: "adressDiv",
-        events: events,
+        events: {
+          place_changed: placeChanged
+        },
         options:{
             autocomplete:true,
             types:['address'],
@@ -68,7 +35,9 @@
             }
         }
     };
+    
     update();
+
     function openModal() {
       vm.modalInstance = $uibModal.open({
         templateUrl: 'modal.tpl.html',
@@ -83,16 +52,51 @@
       var user = new User({
         name: vm.user.name,
         email: vm.user.email,
-        position: [
-          vm.searchConfig.lat , vm.searchConfig.lng
-        ]
+        position: {
+          type: 'Point',
+          coordinates: [vm.searchConfig.lng , vm.searchConfig.lat]
+        }
       });
       vm.modalInstance.close(user);
     }
 
 
     function update() {
-      vm.users = User.query(vm.searchConfig)
+      User.query(vm.searchConfig, function (res) {
+        vm.users = res;
+      })
+    }
+
+    function placeChanged(searchBox) {
+        var place = searchBox.getPlace();
+        if (!place || angular.isUndefined(place)) {
+            return;
+        }
+        //set the center point
+        vm.searchConfig.lat = place.geometry.location.lat();
+        vm.searchConfig.lng = place.geometry.location.lng();
+        // refresh the map
+        vm.map = {
+            center:{
+                latitude:  vm.searchConfig.lat,
+                longitude: vm.searchConfig.lng
+            },
+            zoom: 13
+        };
+        // refresh the marker
+        vm.marker = {
+            id: 1,
+            options:{
+              draggable:false,
+              streetViewControl: false,
+              zoomControl: false
+            },
+            coords:{
+              latitude:  vm.searchConfig.lat,
+              longitude: vm.searchConfig.lng
+            }
+        };
+        update();
     }
 
   }

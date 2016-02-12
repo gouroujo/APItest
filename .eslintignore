@@ -1,8 +1,7 @@
 # node_modules ignored by default
 
 # Ignore files compiled from TypeScript and CoffeeScript
-src/facebookConnectPlugin.js
-index.js
+app.js
 api
 config
 gulp

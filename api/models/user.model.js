@@ -5,7 +5,15 @@ var mongoose = require('mongoose');
 var userSchema = new mongoose.Schema({
   name: String,
   email: String,
-  position: {type: [Number], index: '2dsphere'}
+  position : {
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: [Number]
+  }
 }, { timestamps: true });
+
+userSchema.index({ position : '2dsphere' });
 
 module.exports = mongoose.model('User', userSchema);

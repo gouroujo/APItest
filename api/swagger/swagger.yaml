@@ -91,15 +91,22 @@ definitions:
         type: string
       position:
         description: the last user's position
+        $ref: "#/definitions/GeoJsonSchema"
+  GeoJsonSchema:
+    required:
+      - coordinates
+    properties:
+      coordinates:
         type: array
         items:
           type: number
           maxLength: 2
           minLength: 2
+      type:
+        type: string
   ErrorResponse:
     required:
       - message
     properties:
       message:
         type: string
-        
